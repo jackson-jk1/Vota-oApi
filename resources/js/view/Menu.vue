@@ -15,7 +15,6 @@
                         </h4>
                     </v-subheader>
                     <v-list-item-group
-                        v-model="selectedItem"
                         color="primary"
                     >
                         <v-list-item
@@ -41,11 +40,11 @@
 export default {
     data: function() {
         return {
-            selectedItem: 1,
+
             items: [
                 { text: 'Cadastrar Enquetes', icon: 'mdi-book',route:'/register'},
                 { text: 'Suas as Enquetes', icon: 'mdi-pencil',route:'/view'},
-                { text: 'Todas as Enquetes', icon: 'mdi-flag',route:'/home'},
+                { text: 'Todas as Enquetes', icon: 'mdi-flag',route:'/'},
 
             ],
 

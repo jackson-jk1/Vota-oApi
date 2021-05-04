@@ -2121,6 +2121,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       respostas: {},
       add: '',
+      enqueteAdd: false,
       dialog: false,
       dialog2: false,
       titulo: null,
@@ -2159,7 +2160,7 @@ __webpack_require__.r(__webpack_exports__);
       localData.append('titulo', this.titulo);
       localData.append('inicio', this.dataI + " " + this.horaI);
       localData.append('fim', this.dataF + " " + this.horaF);
-      axios.post('/api/update/' + this.idOpcao, localData).then(function (res) {
+      axios.post('/api/update/' + this.idEnquete, localData).then(function (res) {
         console.log(res);
 
         _this3.$fire({
@@ -2181,7 +2182,7 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function () {});
       });
     },
-    updateOpcao: function updateOpcao(id) {
+    updateOpcao: function updateOpcao() {
       var _this4 = this;
 
       var localData = new FormData();
@@ -2210,17 +2211,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addOpcao: function addOpcao(id) {
-      this.idEnquete = id;
-      this.titulo = null;
+      this.idOpcao = id;
+      this.enqueteAdd = true;
       this.dialog = !this.dialog;
     },
-    addNovaOpcao: function addNovaOpcao(id) {
+    addNovaOpcao: function addNovaOpcao() {
       var _this5 = this;
 
       var localData = new FormData();
       localData.append('titulo', this.titulo);
       console.log(this.idEnquete);
-      axios.post('/api/store/opcoes/' + this.idEnquete, localData).then(function (res) {
+      axios.post('/api/store/opcoes/' + this.idOpcao, localData).then(function (res) {
         _this5.$fire({
           position: 'top-end',
           icon: 'success',
@@ -2245,7 +2246,7 @@ __webpack_require__.r(__webpack_exports__);
     getAttEnq: function getAttEnq(inicio, fim, titulo, id) {
       var i = moment__WEBPACK_IMPORTED_MODULE_0___default()(inicio);
       var f = moment__WEBPACK_IMPORTED_MODULE_0___default()(fim);
-      this.idOpcao = id;
+      this.idEnquete = id;
       this.titulo = titulo;
       this.dataI = i.format("yyyy-MM-DD");
       this.horaI = '';
@@ -2324,6 +2325,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -2788,11 +2790,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      selectedItem: 1,
       items: [{
         text: 'Cadastrar Enquetes',
         icon: 'mdi-book',
@@ -2804,7 +2804,7 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: 'Todas as Enquetes',
         icon: 'mdi-flag',
-        route: '/home'
+        route: '/'
       }],
       user: {
         id: '',
@@ -67218,7 +67218,7 @@ var render = function() {
                 },
                 [
                   _vm._v(" "),
-                  _vm._l(_vm.respostas, function(child, i) {
+                  _vm._l(_vm.respostas, function(child) {
                     return _c(
                       "v-list-item",
                       { key: child.id },
@@ -67384,7 +67384,7 @@ var render = function() {
                     [
                       _c("v-spacer"),
                       _vm._v(" "),
-                      _vm.titulo == null
+                      _vm.enqueteAdd == true
                         ? _c(
                             "v-btn",
                             {
@@ -67399,7 +67399,7 @@ var render = function() {
                           )
                         : _vm._e(),
                       _vm._v(" "),
-                      _vm.titulo != null
+                      _vm.enqueteAdd == false
                         ? _c(
                             "v-btn",
                             {
@@ -67713,7 +67713,7 @@ var render = function() {
                       _c(
                         "v-dialog",
                         {
-                          attrs: { "max-width": "300" },
+                          attrs: { "max-width": "300", "retain-focus": false },
                           model: {
                             value: _vm.dialog,
                             callback: function($$v) {
@@ -68175,16 +68175,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "v-list-item-group",
-                  {
-                    attrs: { color: "primary" },
-                    model: {
-                      value: _vm.selectedItem,
-                      callback: function($$v) {
-                        _vm.selectedItem = $$v
-                      },
-                      expression: "selectedItem"
-                    }
-                  },
+                  { attrs: { color: "primary" } },
                   _vm._l(_vm.items, function(item, i) {
                     return _c(
                       "v-list-item",

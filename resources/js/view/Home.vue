@@ -33,6 +33,7 @@
                         <v-dialog
                             v-model="dialog"
                             max-width="300"
+                            :retain-focus="false"
 
                         >
                             <v-card>

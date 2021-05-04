@@ -30,7 +30,7 @@
                 </template>
 
                 <v-list-item
-                    v-for="(child,i) in respostas"
+                    v-for="(child) in respostas"
                     :key="child.id"
                 >
                     <v-list-item-content>
@@ -87,7 +87,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
-                        v-if="titulo == null"
+                        v-if="enqueteAdd == true"
                         color="green darken-1"
                         text
                         @click="addNovaOpcao"
@@ -96,7 +96,7 @@
                     </v-btn>
 
                     <v-btn
-                        v-if="titulo != null"
+                        v-if="enqueteAdd == false"
                         color="green darken-1"
                         text
                         @click="updateOpcao"
@@ -178,6 +178,7 @@ export default {
         },
         respostas:{},
         add:'',
+        enqueteAdd:false,
         dialog: false,
         dialog2:false,
         titulo:null,
@@ -187,6 +188,7 @@ export default {
         dataF:'',
         horaI:'',
         horaF:'',
+
 
 
     }),
@@ -216,7 +218,7 @@ export default {
             localData.append('inicio',  this.dataI + " " + this.horaI);
             localData.append('fim', this.dataF + " " + this.horaF);
 
-            axios.post('/api/update/' + this.idOpcao, localData)
+            axios.post('/api/update/' + this.idEnquete, localData)
                 .then((res) => {
                     console.log(res);
                     this.$fire({
@@ -241,7 +243,7 @@ export default {
                     });
                 })
         },
-        updateOpcao(id){
+        updateOpcao(){
             const localData = new FormData()
             localData.append('titulo', this.titulo)
             console.log(this.idEnquete);
@@ -269,16 +271,16 @@ export default {
 
         },
         addOpcao(id){
-        this.idEnquete = id;
-        this.titulo = null;
+        this.idOpcao = id;
+        this.enqueteAdd = true;
         this.dialog =! this.dialog;
         },
 
-        addNovaOpcao(id){
+        addNovaOpcao(){
             const localData = new FormData();
             localData.append('titulo', this.titulo);
             console.log(this.idEnquete);
-            axios.post('/api/store/opcoes/' + this.idEnquete, localData).then((res)=>{
+            axios.post('/api/store/opcoes/' + this.idOpcao, localData).then((res)=>{
                 this.$fire({
                     position: 'top-end',
                     icon: 'success',
@@ -304,7 +306,7 @@ export default {
         getAttEnq(inicio,fim,titulo,id){
             let i = moment(inicio);
             let f = moment(fim);
-                this.idOpcao = id;
+                this.idEnquete = id;
                 this.titulo = titulo;
                 this.dataI = i.format("yyyy-MM-DD");
                 this.horaI = '';
