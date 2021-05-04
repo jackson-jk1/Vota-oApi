@@ -2402,8 +2402,7 @@ __webpack_require__.r(__webpack_exports__);
         active: true
       },
       respostas: {},
-      dialog: false,
-      votos: ''
+      dialog: false
     };
   },
   mounted: function mounted() {
@@ -2430,7 +2429,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       axios.post('/api/voto/opcao/' + id).then(function (res) {
-        _this3.respostas[id - 1].votos += 1;
+        _this3.respostas = res.data.opcoes;
       });
     }
   }
@@ -67405,7 +67404,7 @@ var render = function() {
                             "v-btn",
                             {
                               attrs: { color: "green darken-1", text: "" },
-                              on: { click: _vm.addNovaOpcao }
+                              on: { click: _vm.updateOpcao }
                             },
                             [
                               _vm._v(

@@ -45,7 +45,8 @@ class OpcaoController extends Controller
         $voto->update();
         $voto->votos+=1;
         $voto->save();
-        return response()->json(['votos'=>$voto]);
+        $opcao = Opcao::all()->where('id_enquete',$voto->id_enquete);
+        return response()->json(['opcoes' => $opcao]);
     }
 
     public function update(Request $request ,$id)
@@ -57,6 +58,7 @@ class OpcaoController extends Controller
         if ($validator->fails()){
             return response()->json(['erro' => $request->all()],404);
         };
+
         $opcao = Opcao::find($id);
         $id_enquete = $opcao->id_enquete;
         $enquete = Enquete::find($id_enquete);

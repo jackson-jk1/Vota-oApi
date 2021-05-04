@@ -76,9 +76,9 @@ export default {
             items: {
                 active: true,
             },
-            respostas:{},
+            respostas:{
+            },
             dialog:false,
-            votos:'',
 
         }
     }
@@ -103,7 +103,7 @@ export default {
         },
         submit(id){
             axios.post('/api/voto/opcao/' + id).then((res)=>{
-                this.respostas[id-1].votos +=1;
+                this.respostas = res.data.opcoes;
             });
         }
     },

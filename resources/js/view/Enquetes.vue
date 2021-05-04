@@ -99,7 +99,7 @@
                         v-if="titulo != null"
                         color="green darken-1"
                         text
-                        @click="addNovaOpcao"
+                        @click="updateOpcao"
                     >
                         Enviar
                     </v-btn>
